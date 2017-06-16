@@ -8,9 +8,6 @@ or be started by Firefox. In either case, this client will
 establish an inter-process communication (IPC) channel to notify
 Firefox of available updates.
 
-The protocol is inspired by Google's Omaha client+server,
-but is modernized and simplified.
-
 Getting started
 ===============
 
