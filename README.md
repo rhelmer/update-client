@@ -18,69 +18,11 @@ Getting started
 `cargo run`
 
 The client will attempt to connect to port 9999 on localhost,
-and will send an update request:
+and will send an update request.
 
+See the server documentation for a description of the protocol.
 
-```
-{
-    "product": "Firefox",
-    "version": 666,
-    "platform": "macOS",
-    "locale": "en-US"
-}
-```
+If updates are available, the client will attempt to apply them
+on the local system and send a "completion" document to the server.
 
-If no updates are available, the server will return the
-HTTP code `204 No Content`.
-
-If updates are available, the server will return a list
-of available updates along with a request ID:
-
-```
-{
-    "available_updates": {
-        "blocklist": {
-            "url": "https://localhost:8080/src/blocklist_v1.json",
-            "hash_function": "sha512",
-            "hash_value": "abc123",
-            "size": 1234,
-            "version": "1.0"
-        },
-        "gecko_media_plugins": {
-            "url": "https://localhost:8080/src/gmp_v1.json",
-            "hash_function": "sha512",
-            "hash_value": "321cba",
-            "size": 4321,
-            "version": "2.0"
-        }
-    },
-    "request_id": "xyz321"
-}
-```
-
-The client may send a "completion" POST to the server to
-indicate success or failure to download and apply updates:
-
-```
-{
-    "updates": {
-        "blocklist": {
-            "status": "success",
-            "version": "1.0"
-        },
-        "gecko_media_plugins": {
-            "status": "failed",
-            "reason": "bad checksum",
-            "version": "2.0",
-            "hash_function": "sha512",
-            "hash_value": "abc123",
-            "size": 1234
-        }
-    }
-    "request_id": "xyz321",
-}
-```
-
-The client sends back the server-defined request ID, allowing tracking
-of individual updates. The server will record these in to the database.
-
+If not, the client will do nothing and terminate.
