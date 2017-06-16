@@ -1,5 +1,5 @@
 [root]
-name = "firefox-update-client"
+name = "update-client"
 version = "0.1.0"
 dependencies = [
  "futures 0.1.14 (registry+https://github.com/rust-lang/crates.io-index)",
