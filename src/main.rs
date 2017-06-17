@@ -8,6 +8,8 @@ extern crate serde;
 extern crate serde_json;
 
 use std::str;
+use std::fs::File;
+use std::io::prelude::*;
 
 use futures::{Future, Stream};
 
@@ -28,6 +30,7 @@ struct AppConfig {
 // FIXME this should be a vec of updates.
 #[derive(Serialize, Deserialize, Debug)]
 struct Update {
+    update_type: &'static str,
     url: &'static str,
     hash_function: &'static str,
     hash_value: &'static str,
@@ -49,11 +52,11 @@ fn update_check(app_config: AppConfig, uri: hyper::Uri) -> Update {
         res.body().concat2()
     });
 
-    core.run(post).unwrap();
-    // FIXME mock update response for now.
-    // let posted = core.run(post).unwrap();
+    let posted = core.run(post).unwrap();
 
+    // FIXME mock update response for now.
     let update = Update {
+        update_type: "blocklist",
         url: "http://localhost:8080/src/blah.zip",
         hash_function: "sha512",
         hash_value: "abc123",
@@ -66,10 +69,30 @@ fn update_check(app_config: AppConfig, uri: hyper::Uri) -> Update {
 
 /// Download assets from an update and verify that metdata
 /// matches.
-fn download_update(update: Update) -> &'static str {
-    // FIXME actually download and verify asset.
+fn download_update(update: Update) -> String {
+    let uri = update.url.parse().unwrap();
+    let update_type = update.update_type;
+    let version = update.version;
 
-    "/tmp/blah.zip"
+    let mut core = Core::new().unwrap();
+    let client = Client::new(&core.handle());
+
+    let req = Request::new(Method::Post, uri);
+    let asset = client.request(req).and_then(|res| {
+        res.body().concat2()
+    });
+
+    let data = core.run(asset).unwrap();
+
+    let download_filename = format!("/tmp/{}_{}.zip", update_type, version);
+    let mut download_file = File::create(&download_filename).unwrap();
+
+    // FIXME fake data for now.
+    download_file.write_all(b"fake data").unwrap();
+
+    // FIXME verify asset.
+
+    download_filename
 }
 
 
