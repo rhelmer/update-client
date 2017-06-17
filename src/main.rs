@@ -54,7 +54,7 @@ fn update_check(app_config: AppConfig, uri: hyper::Uri) -> Update {
     // let posted = core.run(post).unwrap();
 
     let update = Update {
-        url: "http://.../",
+        url: "http://localhost:8080/src/blah.zip",
         hash_function: "sha512",
         hash_value: "abc123",
         size: 1024,
