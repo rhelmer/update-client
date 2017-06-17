@@ -7,6 +7,8 @@ extern crate serde_derive;
 extern crate serde;
 extern crate serde_json;
 
+use std::str;
+
 use futures::{Future, Stream};
 
 use hyper::Client;
@@ -46,5 +48,7 @@ fn main() {
         res.body().concat2()
     });
 
-    core.run(post).unwrap();
+    let posted = core.run(post).unwrap();
+
+    println!("POST: {}", str::from_utf8(&posted).unwrap());
 }
