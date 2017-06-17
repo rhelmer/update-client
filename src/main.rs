@@ -27,7 +27,6 @@ struct AppConfig {
     locale: &'static str,
 }
 
-// FIXME this should be a vec of updates.
 #[derive(Serialize, Deserialize, Debug)]
 struct Update {
     update_type: &'static str,
@@ -36,6 +35,12 @@ struct Update {
     hash_value: &'static str,
     size: i32,
     version: i32,
+}
+
+#[derive(Serialize)]
+struct ResultMessage {
+    update_type: &'static str,
+    download_path: String,
 }
 
 fn update_check(app_config: AppConfig, uri: hyper::Uri) -> Update {
@@ -64,12 +69,13 @@ fn update_check(app_config: AppConfig, uri: hyper::Uri) -> Update {
         version: 1000,
     };
 
+    // FIXME should return a vec of updates.
     update
 }
 
 /// Download assets from an update and verify that metdata
 /// matches.
-fn download_update(update: Update) -> String {
+fn download_update(update: &Update) -> String {
     let uri = update.url.parse().unwrap();
     let update_type = update.update_type;
     let version = update.version;
@@ -90,8 +96,7 @@ fn download_update(update: Update) -> String {
     // FIXME fake data for now.
     download_file.write_all(b"fake data").unwrap();
 
-    // FIXME verify asset.
-
+    // FIXME verify asset using hash and size from metadata.
     download_filename
 }
 
@@ -109,6 +114,14 @@ fn main() {
     };
 
     let available_update = update_check(app_config, uri);
-    let download_path = download_update(available_update);
-    println!("{}", download_path);
+    let download_path = download_update(&available_update);
+
+    let result_message = ResultMessage {
+        update_type: available_update.update_type,
+        download_path: download_path,
+    };
+
+    // FIXME should return a vec of ResultMessages.
+    let output = serde_json::to_string(&result_message).unwrap();
+    println!("{}", output);
 }
