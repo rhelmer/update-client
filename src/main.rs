@@ -29,17 +29,34 @@ struct AppConfig {
 
 #[derive(Serialize, Deserialize, Debug)]
 struct Update {
-    update_type: &'static str,
-    url: &'static str,
-    hash_function: &'static str,
-    hash_value: &'static str,
+    update_type: String,
+    url: String,
+    hash_function: String,
+    hash_value: String,
     size: i32,
     version: i32,
 }
 
 #[derive(Serialize)]
 struct ResultMessage {
+    update_type: String,
+    download_path: String,
+}
+
+#[derive(Serialize)]
+struct SuccessUpdateStatus {
     update_type: &'static str,
+    version: i32,
+}
+
+#[derive(Serialize)]
+struct FailedUpdateStatus {
+    update_type: &'static str,
+    url: &'static str,
+    hash_function: &'static str,
+    hash_value: &'static str,
+    size: i32,
+    version: i32,
     download_path: String,
 }
 
@@ -57,17 +74,10 @@ fn update_check(app_config: AppConfig, uri: hyper::Uri) -> Update {
         res.body().concat2()
     });
 
-    let posted = core.run(post).unwrap();
+    let post_response = core.run(post).unwrap();
 
-    // FIXME mock update response for now.
-    let update = Update {
-        update_type: "blocklist",
-        url: "http://localhost:8080/src/blah.zip",
-        hash_function: "sha512",
-        hash_value: "abc123",
-        size: 1024,
-        version: 1000,
-    };
+    let json_str = str::from_utf8(&post_response).unwrap();
+    let update: Update = serde_json::from_str(&json_str).unwrap();
 
     // FIXME should return a vec of updates.
     update
@@ -77,7 +87,7 @@ fn update_check(app_config: AppConfig, uri: hyper::Uri) -> Update {
 /// matches.
 fn download_update(update: &Update) -> String {
     let uri = update.url.parse().unwrap();
-    let update_type = update.update_type;
+    let update_type = &update.update_type;
     let version = update.version;
 
     let mut core = Core::new().unwrap();
