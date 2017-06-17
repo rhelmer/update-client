@@ -19,12 +19,13 @@ use hyper::header::{ContentLength, ContentType};
 
 use tokio_core::reactor::Core;
 
+// FIXME share all these structs w/ server.
 #[derive(Serialize)]
 struct AppConfig {
-    product: &'static str,
+    product: String,
     version: i32,
-    platform: &'static str,
-    locale: &'static str,
+    platform: String,
+    locale: String,
 }
 
 #[derive(Serialize, Deserialize, Debug)]
@@ -45,16 +46,16 @@ struct ResultMessage {
 
 #[derive(Serialize)]
 struct SuccessUpdateStatus {
-    update_type: &'static str,
+    update_type: String,
     version: i32,
 }
 
 #[derive(Serialize)]
 struct FailedUpdateStatus {
-    update_type: &'static str,
-    url: &'static str,
-    hash_function: &'static str,
-    hash_value: &'static str,
+    update_type: String,
+    url: String,
+    hash_function: String,
+    hash_value: String,
     size: i32,
     version: i32,
     download_path: String,
@@ -117,10 +118,10 @@ fn main() {
 
     // FIXME hardcode update check values for now.
     let app_config = AppConfig {
-        product: "your_app",
+        product: "your_app".to_string(),
         version: 666,
-        platform: "macOS",
-        locale: "en-US",
+        platform: "macOS".to_string(),
+        locale: "en-US".to_string(),
     };
 
     let available_update = update_check(app_config, uri);
