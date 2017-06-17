@@ -14,17 +14,20 @@ Getting started
 # Build and run.
 `cargo run`
 
-The client will attempt to connect to port 9999 on localhost,
+The client will attempt to connect to port 8000 on localhost,
 and will send an update request.
 
 See the [server documentation](https://github.com/rhelmer/update-server#protocol) for a description of the protocol.
 
 If updates are available, the client will attempt to download
 and apply them on the local system and send a "completion"
-document to the server.  The client will then send an IPC
-message to the application indicating which update(s) have been applied
-and are ready to use.
+document to the server.
+
+In the future, the client will send an IPC message to the application
+indicating which update(s) have been applied and are ready to use.
+
+For the moment, the message is returned on stdout.
 
 If no updates are available, the client will exit if running in
-standalone mode. If running as a Windows service then the request
+standalone mode. When running as an OS service is supported, the request
 will be re-tried at the configured interval.

@@ -18,37 +18,73 @@ use hyper::header::{ContentLength, ContentType};
 use tokio_core::reactor::Core;
 
 #[derive(Serialize)]
-struct UpdateCheck {
+struct AppConfig {
     product: &'static str,
     version: i32,
     platform: &'static str,
     locale: &'static str,
 }
 
-fn main() {
+// FIXME this should be a vec of updates.
+#[derive(Serialize, Deserialize, Debug)]
+struct Update {
+    url: &'static str,
+    hash_function: &'static str,
+    hash_value: &'static str,
+    size: i32,
+    version: i32,
+}
+
+fn update_check(app_config: AppConfig, uri: hyper::Uri) -> Update {
     let mut core = Core::new().unwrap();
     let client = Client::new(&core.handle());
 
-    let check = UpdateCheck {
-        product: "your_app",
-        version: 666,
-        platform: "macOS",
-        locale: "en-US",
-    };
-
-    let json_post = serde_json::to_string(&check).unwrap();
-    let uri = "http://localhost:8000/src/update.json".parse().unwrap();
+    let json_post = serde_json::to_string(&app_config).unwrap();
     let mut req = Request::new(Method::Post, uri);
     req.headers_mut().set(ContentType::json());
     req.headers_mut().set(ContentLength(json_post.len() as u64));
     req.set_body(json_post);
 
     let post = client.request(req).and_then(|res| {
-        println!("POST: {}", res.status());
         res.body().concat2()
     });
 
-    let posted = core.run(post).unwrap();
+    // FIXME mock update response for now.
+    // let posted = core.run(post).unwrap();
 
-    println!("POST: {}", str::from_utf8(&posted).unwrap());
+    let update = Update {
+        url: "http://.../",
+        hash_function: "sha512",
+        hash_value: "abc123",
+        size: 1024,
+        version: 1000,
+    };
+
+    update
+}
+
+/// Download assets from an update and verify that metdata
+/// matches.
+fn download_update(update: Update) -> &'static str {
+    // FIXME actually download and verify asset.
+
+    "/tmp/blah.zip"
+}
+
+
+
+fn main() {
+    let uri = "http://localhost:8000/src/update.json".parse().unwrap();
+
+    // FIXME hardcode update check values for now.
+    let app_config = AppConfig {
+        product: "your_app",
+        version: 666,
+        platform: "macOS",
+        locale: "en-US",
+    };
+
+    let available_update = update_check(app_config, uri);
+    let download_path = download_update(available_update);
+    println!("{}", download_path);
 }
