@@ -49,6 +49,7 @@ fn update_check(app_config: AppConfig, uri: hyper::Uri) -> Update {
         res.body().concat2()
     });
 
+    core.run(post).unwrap();
     // FIXME mock update response for now.
     // let posted = core.run(post).unwrap();
 
