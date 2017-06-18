@@ -1,5 +1,5 @@
-Update Client
-=============
+Application Update client
+=========================
 
 A standalone client for application updates.
 
@@ -7,6 +7,9 @@ This client is intended to either run as a Windows service,
 or be started by the application. In either case, this client will
 establish an inter-process communication (IPC) channel to notify
 the application of available updates.
+
+For the moment, the client simply uses STDOUT as the communications
+channel.
 
 Getting started
 ===============
