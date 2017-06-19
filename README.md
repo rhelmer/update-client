@@ -15,6 +15,7 @@ channel.
 Run an application server. The supported [Application Update server](https://github.com/rhelmer/update-server#readme) is recommended, but any server that implements the [update protocol](https://github.com/rhelmer/update-server#protocol) will work.
 
 ### Build and run.
+
 `cargo run`
 
 The client will attempt to connect to port 8000 on localhost,
