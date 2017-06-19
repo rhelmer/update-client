@@ -18,7 +18,7 @@ Next, build the [Application Update client](https://github.com/rhelmer/update-cl
 
 The example app will attempt to spawn the update client as a child process.
 
-This app will look in `../../target/release/update_client` for the update client binary, so make sure it was built with `--release`!
+This app will look in `../../target/release/update_client` for the update client binary, so make sure it was built with `--release` in the "Dependencies" section above!
 
 If updates are found, the update client will download them and notify the
 example app, which will "install" the update by copying it to the `./updates`
