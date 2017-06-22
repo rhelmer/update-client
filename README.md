@@ -33,3 +33,10 @@ For the moment, the message is returned on stdout.
 If no updates are available, the client will exit if running in
 standalone mode. When running as an OS service is supported, the request
 will be re-tried at the configured interval.
+
+### Using the update client from an application.
+
+The `./examples` directory contains simple applications written in
+different programming languages that show how to use the Application Update
+client.
+with
