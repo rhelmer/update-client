@@ -18,8 +18,8 @@ Run an application server. The supported [Update server](https://github.com/rhel
 
 `cargo run`
 
-The client will attempt to connect to port 8000 on localhost,
-and will send an update request.
+The client will attempt to connect to `http://localhost:8000` and send an
+update request.
 
 If updates are available, the client will attempt to download
 and apply them on the local system and send a "completion"
