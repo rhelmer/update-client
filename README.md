@@ -7,7 +7,7 @@ or be started by the application. In either case, this client will
 establish an inter-process communication (IPC) channel to notify
 the application of available updates.
 
-For the moment, the client simply uses STDOUT as the communications
+For the moment, the client simply uses stdin/stdout as the communications
 channel.
 
 ## Getting started
