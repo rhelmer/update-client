@@ -39,4 +39,3 @@ will be re-tried at the configured interval.
 The `./examples` directory contains simple applications written in
 different programming languages that show how to use the Application Update
 client.
-with
