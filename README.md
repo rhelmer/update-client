@@ -21,6 +21,8 @@ Run an application server. The supported [Update server](https://github.com/rhel
 The client will attempt to connect to `http://localhost:8000` and send an
 update request.
 
+### Update process
+
 If updates are available, the client will attempt to download
 and apply them on the local system and send a "completion"
 document to the server.
@@ -34,8 +36,8 @@ If no updates are available, the client will exit if running in
 standalone mode. When running as an OS service is supported, the request
 will be re-tried at the configured interval.
 
-### Using the update client from an application.
+### Using the update client from your application.
 
 The `./examples` directory contains simple applications written in
-different programming languages that show how to use the Application Update
+several popular programming languages that show how to use the Update
 client.
