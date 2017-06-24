@@ -1,6 +1,6 @@
-# Application Update client
+# Update client
 
-A standalone client for application updates.
+A standalone client for any type of update (data, binary, application, ...)
 
 This client is intended to either run as a Windows service,
 or be started by the application. In either case, this client will
@@ -12,7 +12,7 @@ channel.
 
 ## Getting started
 
-Run an application server. The supported [Application Update server](https://github.com/rhelmer/update-server#readme) is recommended, but any server that implements the [update protocol](https://github.com/rhelmer/update-server#protocol) will work.
+Run an application server. The supported [Update server](https://github.com/rhelmer/update-server#readme) is recommended, but any server that implements the [update protocol](https://github.com/rhelmer/update-server#protocol) will work.
 
 ### Build and run.
 
