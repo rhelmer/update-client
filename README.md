@@ -12,7 +12,7 @@ channel.
 
 ## Getting started
 
-Run an application server. The supported [Update server](https://github.com/rhelmer/update-server#readme) is recommended, but any server that implements the [update protocol](https://github.com/rhelmer/update-server#protocol) will work.
+Run an update server. The supported [Update server](https://github.com/rhelmer/update-server#readme) is recommended, but any server that implements the [update protocol](https://github.com/rhelmer/update-server#protocol) will work.
 
 ### Build and run.
 
