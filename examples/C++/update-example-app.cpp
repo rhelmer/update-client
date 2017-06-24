@@ -20,13 +20,12 @@ int main() {
     std::cout << "\n-----------------------------------------------------\n";
     std::cout << "This is an example app to exercise the update client!\n";
     std::cout << "Checking for updates...\n";
-
-    std::cout << exec("../../target/release/update_client");
-
+    std::cout << "\n" << exec("../../target/release/update_client");
+    std::cout << "\n";
     std::cout << "Update is ready to apply\n";
     std::cout << "Applying update...\n";
     std::cout << "Update has been applied in ./updates/\n";
-
+    std::cout << "\n";
     std::cout << "All done!\n";
     std::cout << "\n-----------------------------------------------------\n";
 }

@@ -1,6 +1,6 @@
-# Example app for Application Update client
+# Example app for Update client
 
-This is an example application which uses the Application Update client,
+This is an example application which uses the Update client,
 written in C++.
 
 ## Getting started
